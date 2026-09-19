@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zencare Practice Management — Mental health EHR for private practices</title>
+  <meta name="description" content="Zencare Practice Management is an all-in-one mental health EHR for solo, group, and growing therapy practices — scheduling, notes, billing, client communication, and insurance in one system." />
+  <meta name="robots" content="index,follow" />
+  <!--
+    Install on live WordPress page (therapist.zencare.co path Daniel sets):
+    GTM-PQF8HF5T | GA4 G-QXZHNPJCPR | AW-921515891 | HubSpot 19873989
+    Paste GTM snippet in <head> + <body> noscript per standard install.
+  -->
+  <style>
+    :root {
+      --teal: #37BEC3;
+      --teal-deep: #1DBCBD;
+      --teal-dark: #159a9b;
+      --navy: #1A2944;
+      --pale-aqua: #C9F8F7;
+      --pale-blue: #F1F6FD;
+      --yellow: #F8B824;
+      --pink: #DB3A8E;
+      --white: #ffffff;
+      --muted: #5a6a85;
+      --border: #d8e3f0;
+      --shadow: 0 8px 28px rgba(26, 41, 68, 0.08);
+      --radius: 12px;
+      --max: 1100px;
+      --font: "Proxima Nova", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--teal-deep); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0;
+    }
+    .logo img {
+      height: 36px;
+      width: auto;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none !important;
+      transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white) !important;
+      box-shadow: 0 4px 14px rgba(55, 190, 195, 0.35);
+    }
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+    .btn-lg {
+      padding: 0.95rem 1.75rem;
+      font-size: 1.05rem;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--navy) !important;
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--teal);
+      color: var(--teal-dark) !important;
+    }
+
+    /* Hero */
+    .hero {
+      background:
+        radial-gradient(1200px 480px at 80% -10%, rgba(55, 190, 195, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--pale-blue) 0%, var(--white) 72%);
+      padding: 3.25rem 0 3.5rem;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      background: var(--pale-aqua);
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(1.85rem, 4vw, 2.65rem);
+      line-height: 1.15;
+      margin: 0 0 1rem;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+      max-width: 38rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .promo-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.92rem;
+      color: var(--navy);
+      background: #fff8e6;
+      border: 1px solid #f3db8a;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+    }
+    .promo-cue strong { color: #9a6a00; }
+    .hero-visual {
+      border-radius: calc(var(--radius) + 4px);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      background: var(--pale-aqua);
+      aspect-ratio: 4 / 3;
+    }
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Trust strip */
+    .trust {
+      background: var(--navy);
+      color: var(--white);
+      padding: 1.35rem 0;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+    .trust-stat {
+      font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      color: var(--pale-aqua);
+      margin: 0;
+    }
+    .trust-label {
+      margin: 0.2rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    /* Features */
+    .section {
+      padding: 3.75rem 0;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 40rem;
+      margin: 0 auto 2.25rem;
+    }
+    h2 {
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      line-height: 1.2;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.015em;
+    }
+    .section-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+    }
+    .feature {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.25rem;
+      box-shadow: 0 2px 10px rgba(26, 41, 68, 0.04);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .feature:hover {
+      border-color: var(--teal);
+      box-shadow: var(--shadow);
+    }
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--pale-aqua);
+      color: var(--teal-dark);
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.85rem;
+      font-size: 1.2rem;
+    }
+    .feature h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.08rem;
+    }
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* FAQ */
+    .faq {
+      background: var(--pale-blue);
+    }
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      gap: 0.75rem;
+    }
+    details.faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+    }
+    details.faq-item summary {
+      font-weight: 650;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+    }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after {
+      content: "+";
+      color: var(--teal-deep);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    details.faq-item[open] summary::after { content: "–"; }
+    details.faq-item p {
+      margin: 0.75rem 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      background:
+        linear-gradient(135deg, var(--navy) 0%, #243a5c 55%, #1a4a4c 100%);
+      color: var(--white);
+      padding: 3.25rem 0;
+      text-align: center;
+    }
+    .final-cta h2 { color: var(--white); margin-bottom: 0.65rem; }
+    .final-cta p {
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 34rem;
+      margin: 0 auto 1.5rem;
+    }
+    .final-cta .btn-primary {
+      background: var(--teal);
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Sticky mobile CTA */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -6px 20px rgba(26, 41, 68, 0.08);
+    }
+    .sticky-cta .btn { width: 100%; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { max-width: 520px; margin-inline: auto; order: -1; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .header-inner .btn-header-desktop { display: none; }
+      .trust-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .sticky-cta { display: block; }
+      body { padding-bottom: 4.5rem; }
+      .hero { padding-top: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Locked primary CTA — do not alter query string -->
+  <!-- CTA_URL: https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&fx_gaId=GA1.1.61862098.1788981986&fx_s=direct&fx_m=direct&fx_ch=direct&fx_sc=direct_direct&utm_content=therapist.zencare.co&fx_utmct=therapist.zencare.co -->
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="https://therapist.zencare.co/" aria-label="Zencare home">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/602c8ddb12b33a4973f0ff95/8d7e55d6-580c-4f1b-960e-364e497e8797/498-1100-Zencare-Logo.png?format=1500w"
+          alt="Zencare"
+          width="160"
+          height="36"
+        />
+      </a>
+      <a
+        class="btn btn-primary btn-header-desktop"
+        href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&fx_gaId=GA1.1.61862098.1788981986&fx_s=direct&fx_m=direct&fx_ch=direct&fx_sc=direct_direct&utm_content=therapist.zencare.co&fx_utmct=therapist.zencare.co"
+      >Start free trial</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Practice Management · EHR</span>
+          <h1>Mental health EHR software for modern private practices.</h1>
+          <p class="lead">
+            Zencare Practice Management is an all-in-one mental health EHR designed for solo, group, and growing therapy practices - bringing scheduling, notes, billing, client communication, and insurance workflows into one seamless system.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary btn-lg"
+              href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&fx_gaId=GA1.1.61862098.1788981986&fx_s=direct&fx_m=direct&fx_ch=direct&fx_sc=direct_direct&utm_content=therapist.zencare.co&fx_utmct=therapist.zencare.co"
+            >Start free trial</a>
+            <a
+              class="btn btn-ghost btn-lg"
+              href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&fx_gaId=GA1.1.61862098.1788981986&fx_s=direct&fx_m=direct&fx_ch=direct&fx_sc=direct_direct&utm_content=therapist.zencare.co&fx_utmct=therapist.zencare.co"
+            >Get started</a>
+          </div>
+          <p class="promo-cue" role="note">
+            <strong>Promo:</strong> Practice Management for $69 for 3 months
+          </p>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <img
+            src="https://images.squarespace-cdn.com/content/602c8ddb12b33a4973f0ff95/d767bb80-351c-4e89-bd3c-b30bbfd79955/iStock-2218995602.jpg"
+            alt=""
+            width="640"
+            height="480"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="Trusted by therapists">
+      <div class="wrap trust-grid">
+        <div>
+          <p class="trust-stat">5,000+</p>
+          <p class="trust-label">therapists</p>
+        </div>
+        <div>
+          <p class="trust-stat">200,000+</p>
+          <p class="trust-label">clients</p>
+        </div>
+        <div>
+          <p class="trust-stat">5M+</p>
+          <p class="trust-label">profile views</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-header">
+          <h2>The connected platform for the full practice workflow.</h2>
+          <p class="section-sub">
+            Scheduling, notes, billing, client communication, and insurance — in one HIPAA-conscious system built for mental health practices.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">📅</div>
+            <h3>Scheduling</h3>
+            <p>Integrated calendar, online booking, and reminders so clients can book without back-and-forth — while you keep control of availability.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">🎥</div>
+            <h3>Video Therapy</h3>
+            <p>Built-in secure video sessions for telehealth, with portal access and host-controlled admission for privacy.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">🚪</div>
+            <h3>Client Portal</h3>
+            <p>A user-friendly portal for booking, intake and consent forms, and account access — so clients self-serve the admin.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">💬</div>
+            <h3>Secure Messaging</h3>
+            <p>Send emails and texts as needed, complete online forms, and keep practice communication in one place.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">📊</div>
+            <h3>Clinical Measures</h3>
+            <p>Track clinical measures alongside notes and records so outcomes stay connected to the care you deliver.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">🛡️</div>
+            <h3>Insurance &amp; Claims</h3>
+            <p>Insurance workflows in the same system as notes and scheduling — fewer tools, cleaner handoffs.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">💳</div>
+            <h3>Invoicing and Payments</h3>
+            <p>Invoices, receipts, and payment processing so billing stays tied to sessions — not a separate spreadsheet.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="wrap">
+        <div class="section-header">
+          <h2>Questions, answered</h2>
+          <p class="section-sub">Straight answers about Practice Management — no marketing detours.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Who is Zencare Practice Management for?</summary>
+            <p>Solo, group, and growing therapy practices that want scheduling, notes, billing, client communication, and insurance workflows in one mental health EHR.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What’s included when I start a free trial?</summary>
+            <p>You’ll create your practice account on members.zencare.co (custom subdomain on .zencarepractice.com) and can explore the Practice Management platform. Use the Start free trial button to begin.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is there a promotional price?</summary>
+            <p>Yes — Practice Management for $69 for 3 months (promo cue from the live site). Details are confirmed during signup.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does it support video and a client portal?</summary>
+            <p>Yes. Built-in Video Therapy and a Client Portal for booking, forms, and messaging are part of the connected practice workflow.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="get-started">
+      <div class="wrap">
+        <h2>Ready to run your practice in one place?</h2>
+        <p>Start your free trial of Zencare Practice Management — the all-in-one mental health EHR for modern private practices.</p>
+        <a
+          class="btn btn-primary btn-lg"
+          href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&fx_gaId=GA1.1.61862098.1788981986&fx_s=direct&fx_m=direct&fx_ch=direct&fx_sc=direct_direct&utm_content=therapist.zencare.co&fx_utmct=therapist.zencare.co"
+        >Start free trial</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="y"></span> Zencare · Practice Management</p>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" id="stickyCta" hidden>
+    <a
+      class="btn btn-primary"
+      href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&fx_gaId=GA1.1.61862098.1788981986&fx_s=direct&fx_m=direct&fx_ch=direct&fx_sc=direct_direct&utm_content=therapist.zencare.co&fx_utmct=therapist.zencare.co"
+    >Start free trial</a>
+  </div>
+
+  <script>
+    (function () {
+      var y = document.getElementById("y");
+      if (y) y.textContent = String(new Date().getFullYear());
+
+      var sticky = document.getElementById("stickyCta");
+      var heroBtn = document.querySelector(".hero-actions .btn-primary");
+      if (!sticky || !heroBtn || !("IntersectionObserver" in window)) return;
+
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            // Show sticky CTA once hero primary button scrolls out of view (mobile CSS gates visibility)
+            if (e.isIntersecting) {
+              sticky.setAttribute("hidden", "");
+            } else {
+              sticky.removeAttribute("hidden");
+            }
+          });
+        },
+        { threshold: 0 }
+      );
+      io.observe(heroBtn);
+    })();
+  </script>
+</body>
+</html>
