@@ -1,34 +1,46 @@
-<!doctype html>
-<html lang="en">
+<?php
+/**
+ * Zencare Practice Management landing markup.
+ *
+ * Generated from the repo root index.html by scripts/build-zpm-landing.php.
+ * Edit index.html, then rebuild. Password-protected pages return before any
+ * landing HTML is sent.
+ *
+ * Template Name: Zencare Practice Management Landing
+ * Template Post Type: page
+ *
+ * @package Zencare
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( function_exists( 'post_password_required' ) && post_password_required() ) {
+	return;
+}
+
+?><!doctype html>
+<html <?php zpm_landing_language_attributes(); ?>>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#F1F6FD">
   <meta name="description" content="Explore Zencare Practice Management: mental health EHR software for scheduling, notes, billing, client communication, and insurance workflows. Start your free trial.">
   <meta name="robots" content="noindex,follow">
-  <title>Mental Health EHR for Private Practices | Zencare Practice Management</title>
+  <?php if ( ! function_exists( 'current_theme_supports' ) || ! current_theme_supports( 'title-tag' ) ) : ?>
+<title><?php echo esc_html( zpm_landing_document_title_string() ); ?></title>
+<?php endif; ?>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
-  <link rel="icon" href="./assets/favicon.ico" sizes="16x16 32x32">
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( zpm_landing_asset_uri( 'favicon-32x32.png' ) ); ?>">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( zpm_landing_asset_uri( 'favicon-16x16.png' ) ); ?>">
+  <link rel="icon" href="<?php echo esc_url( zpm_landing_asset_uri( 'favicon.ico' ) ); ?>" sizes="16x16 32x32">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( zpm_landing_asset_uri( 'apple-touch-icon.png' ) ); ?>">
   <!-- ZPM_CANONICAL -->
-  <!-- Existing production GTM only. Loads on therapist.zencare.co and zpm.zencare.co. Other hosts, including local and staging previews, do not load analytics. -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    (function () {
-      var allowedHosts = ['therapist.zencare.co', 'zpm.zencare.co'];
-      if (allowedHosts.indexOf(window.location.hostname) === -1) {
-        return;
-      }
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-PQF8HF5T');
-    })();
-  </script>
+  <?php zpm_landing_print_gtm_snippet(); ?>
+  <?php if ( function_exists( 'wp_head' ) ) { wp_head(); } ?>
   <style>
     :root{--zc-navy:#1a2944;--zc-teal-bright:#37bec3;--zc-bg-blue:#f1f6fd;--zc-muted:#4e6076;--zc-border:#dce6ee;--navy:var(--zc-navy);--teal:var(--zc-teal-bright);--button:#087c80;--button-hover:#086569;--aqua:#c9f8f7;--blue:var(--zc-bg-blue);--muted:var(--zc-muted);--line:var(--zc-border);--white:#fff}
     *,*::before,*::after{box-sizing:border-box}
@@ -94,11 +106,12 @@
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
   </style>
 </head>
-<body>
+<body <?php zpm_landing_body_attributes(); ?>>
+<?php if ( function_exists( 'wp_body_open' ) ) { wp_body_open(); } ?>
   <!-- ZPM_GTM_NOSCRIPT -->
   <header class="header"><div class="wrap header-inner">
-    <img class="brand" src="./assets/zencare-logo.webp" width="500" height="107" alt="Zencare">
-    <a class="button button-small" data-cta-location="header" href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&amp;fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&amp;fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&amp;fx_gaId=GA1.1.61862098.1788981986&amp;fx_s=direct&amp;fx_m=direct&amp;fx_ch=direct&amp;fx_sc=direct_direct&amp;utm_content=therapist.zencare.co&amp;fx_utmct=therapist.zencare.co">Start free trial<span aria-hidden="true">↗</span></a>
+    <img class="brand" src="<?php echo esc_url( zpm_landing_asset_uri( 'zencare-logo.webp' ) ); ?>" width="500" height="107" alt="Zencare">
+    <a class="button button-small" data-cta-location="header" href="<?php echo esc_url( zpm_landing_cta_url() ); ?>">Start free trial<span aria-hidden="true">↗</span></a>
   </div></header>
   <main>
     <section class="hero" aria-labelledby="hero-title"><div class="wrap hero-grid">
@@ -106,11 +119,11 @@
         <p class="eyebrow">Mental health EHR for private practices</p>
         <h1 id="hero-title">Run your therapy practice in <em>one connected EHR.</em></h1>
         <p class="lead">Bring scheduling, clinical notes, billing, and client communication together with Zencare Practice Management.</p>
-        <div class="hero-action"><a class="button " data-cta-location="hero" href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&amp;fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&amp;fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&amp;fx_gaId=GA1.1.61862098.1788981986&amp;fx_s=direct&amp;fx_m=direct&amp;fx_ch=direct&amp;fx_sc=direct_direct&amp;utm_content=therapist.zencare.co&amp;fx_utmct=therapist.zencare.co">Start free trial<span aria-hidden="true">↗</span></a></div>
+        <div class="hero-action"><a class="button " data-cta-location="hero" href="<?php echo esc_url( zpm_landing_cta_url() ); ?>">Start free trial<span aria-hidden="true">↗</span></a></div>
         <p class="hero-note">Onboarding and migration support to help you get started.</p>
       </div>
       <figure class="product-frame">
-        <img src="./assets/zpm-calendar.png" width="1225" height="873" alt="Zencare scheduling interface with a weekly calendar, appointments, locations, and therapist filters" fetchpriority="high" decoding="async">
+        <img src="<?php echo esc_url( zpm_landing_asset_uri( 'zpm-calendar.png' ) ); ?>" width="1225" height="873" alt="Zencare scheduling interface with a weekly calendar, appointments, locations, and therapist filters" fetchpriority="high" decoding="async">
         <figcaption>Appointments, availability, and your team in one calendar.</figcaption>
       </figure>
     </div></section>
@@ -120,7 +133,7 @@
     </div></div>
     <section class="section workflow wrap" aria-labelledby="workflow-title"><div class="workflow-grid">
       <figure class="product-frame notes-visual">
-        <img src="./assets/zpm-notes.png" width="3072" height="2304" alt="Zencare Smart Notes controls for note detail, formatting, and SOAP or DAP templates" loading="lazy" decoding="async">
+        <img src="<?php echo esc_url( zpm_landing_asset_uri( 'zpm-notes.png' ) ); ?>" width="3072" height="2304" alt="Zencare Smart Notes controls for note detail, formatting, and SOAP or DAP templates" loading="lazy" decoding="async">
         <figcaption>Smart Notes templates and editing controls.</figcaption>
       </figure>
       <div class="workflow-copy">
@@ -167,7 +180,7 @@
     </div></section>
     <section class="trial wrap" aria-labelledby="trial-title"><div class="trial-inner">
       <div><p class="eyebrow">Explore Practice Management</p><h2 id="trial-title">Try the tools behind<br>a more connected practice.</h2><p class="trial-copy">Start a free trial to explore scheduling, notes, billing, and client communication in Zencare Practice Management.</p></div>
-      <div class="trial-action"><a class="button " data-cta-location="trial" href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&amp;fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&amp;fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&amp;fx_gaId=GA1.1.61862098.1788981986&amp;fx_s=direct&amp;fx_m=direct&amp;fx_ch=direct&amp;fx_sc=direct_direct&amp;utm_content=therapist.zencare.co&amp;fx_utmct=therapist.zencare.co">Start free trial<span aria-hidden="true">↗</span></a><p>Create your Practice Management account<br>to get started.</p></div>
+      <div class="trial-action"><a class="button " data-cta-location="trial" href="<?php echo esc_url( zpm_landing_cta_url() ); ?>">Start free trial<span aria-hidden="true">↗</span></a><p>Create your Practice Management account<br>to get started.</p></div>
     </div></section>
     <section class="faq" aria-labelledby="faq-title"><div class="wrap faq-grid">
       <div class="faq-intro"><p class="eyebrow">Before you get started</p><h2 id="faq-title">A few practical answers.</h2><p>Get to know the tools and support for your practice.</p></div>
@@ -181,14 +194,14 @@
       </div>
     </div></section>
     <section class="final" aria-labelledby="final-title"><div class="wrap final-inner">
-      <div><h2 id="final-title">See how Zencare fits<br>your practice.</h2><p>Explore an EHR that brings your clinical and administrative tools together.</p></div><a class="button " data-cta-location="final" href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&amp;fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&amp;fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&amp;fx_gaId=GA1.1.61862098.1788981986&amp;fx_s=direct&amp;fx_m=direct&amp;fx_ch=direct&amp;fx_sc=direct_direct&amp;utm_content=therapist.zencare.co&amp;fx_utmct=therapist.zencare.co">Start free trial<span aria-hidden="true">↗</span></a>
+      <div><h2 id="final-title">See how Zencare fits<br>your practice.</h2><p>Explore an EHR that brings your clinical and administrative tools together.</p></div><a class="button " data-cta-location="final" href="<?php echo esc_url( zpm_landing_cta_url() ); ?>">Start free trial<span aria-hidden="true">↗</span></a>
     </div></section>
   </main>
   <footer><div class="wrap footer-inner">
     <div class="footer-brand"><strong>Zencare Practice Management</strong><br>© <span id="copyright-year">2026</span> Zencare Group Inc.</div>
     <div class="legal-links" aria-label="Legal information"><a href="https://zencare.co/policy/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy<span class="visually-hidden"> (opens in a new tab)</span></a><a href="https://zencare.co/policy/practice-management-terms-and-conditions" target="_blank" rel="noopener noreferrer">Terms<span class="visually-hidden"> (opens in a new tab)</span></a></div>
   </div></footer>
-  <div class="mobile-bar" aria-label="Start your Practice Management trial"><a class="button " data-cta-location="mobile_sticky" href="https://members.zencare.co/practice-management?fx_sid=8fa8a5f1-b3c7-4e1e-9d1e-793242e3ccaa&amp;fx_lp=https%3A%2F%2Ftherapist.zencare.co%2F&amp;fx_uid=e4d68770-086e-484a-8a40-2088f73583e2&amp;fx_gaId=GA1.1.61862098.1788981986&amp;fx_s=direct&amp;fx_m=direct&amp;fx_ch=direct&amp;fx_sc=direct_direct&amp;utm_content=therapist.zencare.co&amp;fx_utmct=therapist.zencare.co">Start free trial<span aria-hidden="true">↗</span></a></div>
+  <div class="mobile-bar" aria-label="Start your Practice Management trial"><a class="button " data-cta-location="mobile_sticky" href="<?php echo esc_url( zpm_landing_cta_url() ); ?>">Start free trial<span aria-hidden="true">↗</span></a></div>
   <script>
     (function(){
       'use strict';
@@ -223,5 +236,6 @@
       update();
     })();
   </script>
+<?php if ( function_exists( 'wp_footer' ) ) { wp_footer(); } ?>
 </body>
 </html>
